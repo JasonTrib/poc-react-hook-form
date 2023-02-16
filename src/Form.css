@@ -1,0 +1,13 @@
+.form{
+    border: 1px solid #dadada;
+    border-radius: 4px;
+    box-shadow: 0 0 20px rgba(0,0,0,20%);
+    padding: 32px;
+    width: 480px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form > * {
+    margin-block: 12px;
+}

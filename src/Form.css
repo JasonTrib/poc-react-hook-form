@@ -11,3 +11,8 @@
 .form > * {
     margin-block: 12px;
 }
+
+.form .error{
+    color: red;
+    font-size: 12px;
+}

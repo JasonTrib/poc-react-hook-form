@@ -1,14 +1,16 @@
 import { DevTool } from "@hookform/devtools";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { radioOptions, selectLangOptions } from "./data/data";
+import { JobsFormContext } from "./routes/Jobs";
 import "./styles/form.css";
 import FormSchema, { FormSchemaT } from "./validations/FormSchema";
 
 function FormStep1() {
   const navigate = useNavigate();
+  const { formData, setFormData } = useContext(JobsFormContext);
   const {
     register,
     unregister,
@@ -19,22 +21,7 @@ function FormStep1() {
     watch,
   } = useForm<FormSchemaT>({
     resolver: zodResolver(FormSchema),
-    defaultValues: {
-      companyName: "XE",
-      password: "",
-      confirmPassword: "",
-      selectLang: "EL",
-      isPrimary: true,
-      radio: "",
-      daysPto: 0,
-      invoice: [
-        {
-          vatNumber: 1234567890,
-        },
-      ],
-      hasOffice: false,
-      address: undefined,
-    },
+    defaultValues: formData,
     // shouldUnregister: true,
     // mode: "onBlur",
     // mode: "onChange",
@@ -46,7 +33,7 @@ function FormStep1() {
   });
 
   const onSubmit: SubmitHandler<FormSchemaT> = (data) => {
-    console.log("Submitted:", data);
+    setFormData(data);
     navigate("../step-2");
   };
   const handleReset = () =>
@@ -68,8 +55,6 @@ function FormStep1() {
       unregister("address");
     }
   }, [unregister, officeFieldValue]);
-
-  console.log("rendered:", errors);
 
   return (
     <>

@@ -1,11 +1,10 @@
-import { Outlet } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../styles/index.css";
 
 export default function Root() {
   return (
-    <div className="app">
-      <h1>React hook form POC</h1>
-      <Outlet />
-    </div>
+    <Link to={"jobs/step-1"}>
+      <h2 style={{ textAlign: "center" }}>Begin</h2>
+    </Link>
   );
 }

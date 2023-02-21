@@ -17,3 +17,12 @@
     color: red;
     font-size: 12px;
 }
+
+.nav {
+    display: flex;
+    column-gap: 32px;
+}
+
+.nav button {
+    flex-grow: 1;
+}

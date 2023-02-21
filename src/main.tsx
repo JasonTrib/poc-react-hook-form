@@ -1,24 +1,21 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import FormStep1 from "./FormStep1";
 import FormStep2 from "./FormStep2";
 import FormStep3 from "./FormStep3";
-import "./styles/index.css";
+import Jobs from "./routes/Jobs";
 import Root from "./routes/Root";
-import { createBrowserRouter, Link, RouterProvider } from "react-router-dom";
+import "./styles/index.css";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <Link to={"jobs/step-1"}>
-        <h2 style={{ textAlign: "center" }}>Begin</h2>
-      </Link>
-    ),
+    element: <Root />,
   },
   {
     path: "/jobs",
-    element: <Root />,
+    element: <Jobs />,
     children: [
       {
         path: "step-1",

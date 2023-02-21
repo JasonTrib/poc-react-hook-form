@@ -2,11 +2,13 @@ import { DevTool } from "@hookform/devtools";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { radioOptions, selectLangOptions } from "./data/data";
-import "./Form.css";
+import "./styles/form.css";
 import FormSchema, { FormSchemaT } from "./validations/FormSchema";
 
-function Form() {
+function FormStep1() {
+  const navigate = useNavigate();
   const {
     register,
     unregister,
@@ -43,7 +45,10 @@ function Form() {
     control,
   });
 
-  const onSubmit: SubmitHandler<FormSchemaT> = (data) => console.log("Submitted:", data);
+  const onSubmit: SubmitHandler<FormSchemaT> = (data) => {
+    console.log("Submitted:", data);
+    navigate("../step-2");
+  };
   const handleReset = () =>
     reset({
       companyName: "",
@@ -68,7 +73,6 @@ function Form() {
 
   return (
     <>
-      <h1>React hook form POC</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="form">
         <button onClick={handleReset}>Reset</button>
 
@@ -155,11 +159,11 @@ function Form() {
           </label>
         )}
 
-        <button type="submit">Submit</button>
+        <button type="submit">Next</button>
       </form>
       <DevTool control={control} />
     </>
   );
 }
 
-export default Form;
+export default FormStep1;

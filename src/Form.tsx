@@ -1,9 +1,9 @@
-import { DevTool } from '@hookform/devtools';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect } from 'react';
-import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
+import { DevTool } from "@hookform/devtools";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
+import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import { radioOptions, selectLangOptions } from "./data/data";
-import './Form.css';
+import "./Form.css";
 import FormSchema, { FormSchemaT } from "./validations/FormSchema";
 
 function Form() {
@@ -18,16 +18,18 @@ function Form() {
   } = useForm<FormSchemaT>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      companyName: 'XE',
-      password: '',
-      confirmPassword: '',
-      selectLang: 'EL',
+      companyName: "XE",
+      password: "",
+      confirmPassword: "",
+      selectLang: "EL",
       isPrimary: true,
-      radio: '',
+      radio: "",
       daysPto: 0,
-      invoice: [{
-        vatNumber: 1234567890,
-      }],
+      invoice: [
+        {
+          vatNumber: 1234567890,
+        },
+      ],
       hasOffice: false,
       address: undefined,
     },
@@ -37,30 +39,31 @@ function Form() {
     // reValidateMode: "onBlur",
   });
   const { fields, append, remove } = useFieldArray({
-    name: 'invoice',
+    name: "invoice",
     control,
   });
 
-  const onSubmit: SubmitHandler<FormSchemaT> = (data) => console.log('Submitted:', data);
-  const handleReset = () => reset({
-    companyName: '',
-    password: '',
-    confirmPassword: '',
-    selectLang: "EL",
-    isPrimary: false,
-    radio: '',
-    daysPto: 0,
-    invoice: [],
-    hasOffice: false,
-  });
+  const onSubmit: SubmitHandler<FormSchemaT> = (data) => console.log("Submitted:", data);
+  const handleReset = () =>
+    reset({
+      companyName: "",
+      password: "",
+      confirmPassword: "",
+      selectLang: "EL",
+      isPrimary: false,
+      radio: "",
+      daysPto: 0,
+      invoice: [],
+      hasOffice: false,
+    });
   const officeFieldValue = watch("hasOffice");
 
   useEffect(() => {
-    if(officeFieldValue === false){
+    if (officeFieldValue === false) {
       unregister("address");
     }
-  }, [unregister, officeFieldValue])
-  
+  }, [unregister, officeFieldValue]);
+
   console.log("rendered:", errors);
 
   return (
@@ -77,7 +80,7 @@ function Form() {
 
         <label htmlFor="password">
           <span>Password</span>
-          <input type="password" {...register("password", { deps: ['confirmPassword'] })} />
+          <input type="password" {...register("password", { deps: ["confirmPassword"] })} />
           <span className="error">{errors.password?.message}</span>
         </label>
 
@@ -90,9 +93,11 @@ function Form() {
         <label htmlFor="selectLang">
           <span>Select language</span>
           <select {...register("selectLang")}>
-            {selectLangOptions.map((value) =>
-              <option key={value} value={value}>{value}</option>
-            )}
+            {selectLangOptions.map((value) => (
+              <option key={value} value={value}>
+                {value}
+              </option>
+            ))}
           </select>
           <span className="error">{errors.selectLang?.message}</span>
         </label>
@@ -105,12 +110,12 @@ function Form() {
 
         <div>
           <span>Radio</span>
-          {radioOptions.map((value) =>
+          {radioOptions.map((value) => (
             <label key={value}>
               <input {...register("radio")} type="radio" value={value} />
               {value}
             </label>
-          )}
+          ))}
           <span className="error">{errors.radio?.message}</span>
         </div>
 
@@ -120,17 +125,21 @@ function Form() {
           <span className="error">{errors.daysPto?.message}</span>
         </label>
 
-        {fields.map((field, idx)=>
+        {fields.map((field, idx) => (
           <div key={field.id}>
             <label htmlFor="vat">
               <span>VAT</span>
               <input type="number" {...register(`invoice.${idx}.vatNumber` as const)} />
               <span className="error">{errors.invoice?.[idx]?.vatNumber?.message}</span>
             </label>
-            <button type='button' onClick={()=>remove(idx)}>✖</button>
+            <button type="button" onClick={() => remove(idx)}>
+              ✖
+            </button>
           </div>
-        )}
-        <button type='button' onClick={()=>append({vatNumber: null})}>➕ VAT</button>
+        ))}
+        <button type="button" onClick={() => append({ vatNumber: null })}>
+          ➕ VAT
+        </button>
 
         <label>
           <input type="checkbox" {...register("hasOffice")} />
@@ -138,19 +147,19 @@ function Form() {
           <span className="error">{errors.hasOffice?.message}</span>
         </label>
 
-        {officeFieldValue === true &&
+        {officeFieldValue === true && (
           <label htmlFor="address">
             <span>Address</span>
             <input type="text" {...register("address")} />
             <span className="error">{errors.address?.message}</span>
           </label>
-        }
+        )}
 
         <button type="submit">Submit</button>
       </form>
       <DevTool control={control} />
     </>
-  )
+  );
 }
 
-export default Form
+export default Form;

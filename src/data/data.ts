@@ -1,7 +1,11 @@
-export const defaultFieldData = {
-  companyName: "XE",
+export const defaultFieldsStep1Data = {
+  username: "",
   password: "",
   confirmPassword: "",
+};
+
+export const defaultFieldsStep2Data = {
+  companyName: "",
   selectLang: "EL",
   isPrimary: true,
   radio: "",

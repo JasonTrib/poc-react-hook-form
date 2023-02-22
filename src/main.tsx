@@ -18,15 +18,15 @@ const router = createBrowserRouter([
     element: <Jobs />,
     children: [
       {
-        path: "step-1",
+        path: "step/1",
         element: <FormStep1 />,
       },
       {
-        path: "step-2",
+        path: "step/2",
         element: <FormStep2 />,
       },
       {
-        path: "step-3",
+        path: "step/3",
         element: <FormStep3 />,
       },
     ],

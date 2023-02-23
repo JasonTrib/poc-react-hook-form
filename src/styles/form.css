@@ -1,4 +1,4 @@
-.form{
+.card{
     background: white;
     border: 1px solid #dadada;
     border-radius: 4px;
@@ -10,7 +10,7 @@
 }
 
 .form > * {
-    margin-block: 12px;
+    margin-block: 8px;
 }
 
 .form .error{

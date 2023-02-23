@@ -1,5 +1,9 @@
 import { DevTool } from "@hookform/devtools";
 import { zodResolver } from "@hookform/resolvers/zod";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import { Box, Button, Grid } from "@mui/material";
 import { useContext } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -38,9 +42,7 @@ function FormStep1() {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} className="form">
-        <button onClick={handleReset}>Reset</button>
-
+      <form onSubmit={handleSubmit(onSubmit)} className="card form">
         <label htmlFor="username">
           <span>Username</span>
           <input type="text" {...register("username")} />
@@ -59,7 +61,25 @@ function FormStep1() {
           <span className="error">{errors.confirmPassword?.message}</span>
         </label>
 
-        <button type="submit">Next</button>
+        <Box mt={4}>
+          <Grid container spacing={2}>
+            <Grid item xs={5}>
+              <Button variant="outlined" startIcon={<ArrowBackIcon />} onClick={() => navigate("/")} fullWidth>
+                Back
+              </Button>
+            </Grid>
+            <Grid item xs={2}>
+              <Button variant="text" color="error" onClick={handleReset} fullWidth>
+                <RestartAltIcon />
+              </Button>
+            </Grid>
+            <Grid item xs={5}>
+              <Button variant="contained" endIcon={<ArrowForwardIcon />} type="submit" fullWidth>
+                Next
+              </Button>
+            </Grid>
+          </Grid>
+        </Box>
       </form>
       <DevTool control={control} />
     </>

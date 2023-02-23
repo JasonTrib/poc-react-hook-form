@@ -1,5 +1,7 @@
 import { DevTool } from "@hookform/devtools";
 import { zodResolver } from "@hookform/resolvers/zod";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Box, Button, Grid } from "@mui/material";
 import _ from "lodash";
 import { useContext } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -28,17 +30,25 @@ function FormStep3() {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} className="form">
+      <form onSubmit={handleSubmit(onSubmit)} className="card form">
         <pre style={{ background: "hsl(0deg 0% 0% / 5%)" }}>{JSON.stringify(fieldsData, null, 2)}</pre>
 
         {!_.isEmpty(errors) && <span className="error">Validation errors exist! Go back and fix them!</span>}
 
-        <div className="nav">
-          <button type="button" onClick={() => navigate("../step/2")}>
-            Previous
-          </button>
-          <button type="submit">Submit</button>
-        </div>
+        <Box mt={4}>
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <Button variant="outlined" startIcon={<ArrowBackIcon />} onClick={() => navigate("../step/2")} fullWidth>
+                Previous
+              </Button>
+            </Grid>
+            <Grid item xs={6}>
+              <Button variant="contained" type="submit" fullWidth>
+                Submit
+              </Button>
+            </Grid>
+          </Grid>
+        </Box>
       </form>
       <DevTool control={control} />
     </>

@@ -11,22 +11,25 @@ export const FormStep1Schema = z
     path: ["confirmPassword"],
   });
 
-export const FormStep2Schema = z.object({
-  companyName: z.string().trim().min(2, "Must be at least 2 characters long!"),
-  selectLang: z.string(),
-  isPrimary: z.boolean(),
-  radio: z.string().or(z.null()),
-  hasOffice: z.boolean(),
-  daysPto: z.coerce.number().min(0, "Must be positive!").max(60, "Must be at most 60!"),
-  address: z.string().trim().min(1, "Required!").optional(),
-  invoice: z.array(
-    z.object({
-      vatNumber: z.coerce
-        .number()
-        .refine((val) => String(val).match(/^$|^\d{10,15}$/), "Must be between 10 and 15 digits!"),
-    })
-  ),
-});
+export const FormStep2Schema = z
+  .object({
+    companyName: z.string().trim().min(2, "Must be at least 2 characters long!"),
+    isPrimary: z.boolean(),
+    radio: z.enum(["AM", "FM"]).nullable(),
+    selectLang: z.enum(["EN", "EL", "ES", "FR"]),
+    daysPto: z.coerce.number().min(0, "Must be positive!").max(60, "Must be at most 60!"),
+    invoice: z.array(
+      z.object({
+        vatNumber: z.string().regex(/^$|^\d{10,15}$/, "Must be between 10 and 15 digits!"),
+      })
+    ),
+    hasOffice: z.boolean(),
+    address: z.string().trim().optional(),
+  })
+  .refine((schema) => (schema.hasOffice && !schema.address ? false : true), {
+    message: "Required!",
+    path: ["address"],
+  });
 
 export const FormSchema = FormStep1Schema.and(FormStep2Schema);
 
